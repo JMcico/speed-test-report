@@ -1,6 +1,7 @@
 import speedtest
 import time
-from datetime import datetime 
+from datetime import datetime
+
 
 def run_speedtest():
     # 记录测试开始时间
@@ -52,34 +53,20 @@ def run_speedtest():
 
     # 返回结果
     return {
-        "test_start_time": test_start_time,
-        "download_speed": download_speed,
-        "upload_speed": upload_speed,
-        "ping": ping_values[-1],
-        "jitter": average_jitter,
-        "bytes_sent": bytes_sent,
-        "bytes_received": bytes_received,
-        "server_name": server_name,
-        "server_country": server_country,
-        "server_sponsor": server_sponsor,
-        "test_end_time": test_end_time,
-        "test_duration": test_duration
-    }
-
-if __name__ == "__main__":
-    # 运行速度测试
-    results = run_speedtest()
-
-    # 打印结果
-    print(f"Test Start Time: {results['test_start_time']}")    
-    print(f"Download Speed: {results['download_speed']:.2f} Mbps")
-    print(f"Upload Speed: {results['upload_speed']:.2f} Mbps")
-    print(f"Ping: {results['ping']:.2f} ms")
-    print(f"Jitter: {results['jitter']:.2f} ms")
-    print(f"Test End Time: {results['test_end_time']}")
-    print(f"Bytes Sent: {results['bytes_sent']} bytes")
-    print(f"Bytes Received: {results['bytes_received']} bytes")
-    print(f"Server Name: {results['server_name']}")
-    print(f"Server Country: {results['server_country']}")
-    print(f"Server Sponsor: {results['server_sponsor']}")
-    print(f"Test Duration: {results['test_duration']:.2f} seconds")
+        "measurement": "speedtest",  # 测量值名称
+        "fields": {
+            "download_speed": download_speed,
+            "upload_speed": upload_speed,
+            "ping": ping_values[-1],
+            "jitter": average_jitter,
+            "bytes_sent": bytes_sent,
+            "bytes_received": bytes_received,
+            "test_duration": test_duration
+        },
+        "tags": {
+            "server_name": server_name,
+            "server_country": server_country,
+            "server_sponsor": server_sponsor
+        },
+        "time": test_start_time,
+    } 
