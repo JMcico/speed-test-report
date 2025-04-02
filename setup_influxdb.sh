@@ -28,7 +28,7 @@ sudo dpkg -i influxdb2-${INFLUXDB_VERSION}-amd64.deb
 # 安装独立的influx CLI工具（关键修复）
 wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-${INFLUXCLI_VERSION}-linux-amd64.tar.gz
 tar xvzf influxdb2-client-${INFLUXCLI_VERSION}-linux-amd64.tar.gz
-cp influxdb2-client-${INFLUXCLI_VERSION}-linux-amd64/influx /usr/local/bin/
+cp ./influx /usr/local/bin/
 chmod +x /usr/local/bin/influx
 
 # 启动 InfluxDB 服务
