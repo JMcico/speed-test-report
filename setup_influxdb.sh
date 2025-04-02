@@ -83,3 +83,6 @@ echo "InfluxDB Admin Password: ${INFLUXDB_ADMIN_PASSWORD}"
 echo "InfluxDB Organization: ${INFLUXDB_ORG}"
 echo "InfluxDB Bucket: ${INFLUXDB_BUCKET}"
 echo "InfluxDB Token: my-super-secret-token"
+
+chown -R kds_admin:kds_admin ~/Speeder/speed-test-report
+chmod 755 ~/Speeder/speed-test-report
