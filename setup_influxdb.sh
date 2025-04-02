@@ -2,10 +2,19 @@
 
 # 定义变量
 INFLUXDB_VERSION="2.7.1"  # InfluxDB 版本
+INFLUXDB_DATA_DIR="/var/lib/influxdb"
+INFLUXDB_CONFIG_DIR="/etc/influxdb"
 INFLUXDB_ADMIN_USER="admin"  # 管理员用户名
 INFLUXDB_ADMIN_PASSWORD="admin123"  # 管理员密码
 INFLUXDB_ORG="speeder"  # 组织名称
 INFLUXDB_BUCKET="speeder"  # Bucket 名称
+INFLUXDB_PORT="8086"
+
+# 检查root权限
+if [ "$(id -u)" -ne 0 ]; then
+  echo "错误：请使用sudo或以root用户运行此脚本"
+  exit 1
+fi
 
 # 安装依赖
 sudo apt update
