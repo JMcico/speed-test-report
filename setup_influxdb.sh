@@ -55,6 +55,9 @@ timeout 30 influx setup --force \
   --retention 0 \
   --token my-super-secret-token
 
+chown -R kds_admin:kds_admin ~/Speeder/speed-test-report
+chmod 755 ~/Speeder/speed-test-report
+
 if [ $? -eq 0 ]; then
   echo -e "\n\033[32mInfluxDB 初始化成功!\033[0m"
   echo "URL: http://$(hostname -I | awk '{print $1}'):8086"
@@ -83,6 +86,3 @@ echo "InfluxDB Admin Password: ${INFLUXDB_ADMIN_PASSWORD}"
 echo "InfluxDB Organization: ${INFLUXDB_ORG}"
 echo "InfluxDB Bucket: ${INFLUXDB_BUCKET}"
 echo "InfluxDB Token: my-super-secret-token"
-
-chown -R kds_admin:kds_admin ~/Speeder/speed-test-report
-chmod 755 ~/Speeder/speed-test-report
