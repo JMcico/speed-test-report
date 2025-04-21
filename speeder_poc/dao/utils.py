@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 # 配置项
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path.cwd() / "data"
 
 def save_data(data):
     """保存到JSONL文件"""
@@ -13,7 +13,7 @@ def save_data(data):
     
     with open(today_file, "a", encoding="utf-8") as f:
         f.write(json.dumps(data, ensure_ascii=False) + "\n")
-        # print("Writen Json file successfully!")
+        print("Writen Json file successfully!")
 
 
 def print_test_results(data):
