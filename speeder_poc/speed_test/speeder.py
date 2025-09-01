@@ -28,7 +28,7 @@ def run_speedtest(server_id=None):
 
     # 获取服务器信息
     server = st.results.server
-    server_name = server['name']
+    # server_name = server['name']
     server_country = server['country']
     server_sponsor = server['sponsor']
 
@@ -71,7 +71,7 @@ def run_speedtest(server_id=None):
             "test_duration": test_duration
         },
         "tags": {
-            "server_name": server_name,
+            # "server_name": server_name,
             "server_country": server_country,
             "server_sponsor": server_sponsor
         },

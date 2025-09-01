@@ -12,7 +12,7 @@ def print_test_results(results):
     print(f"Jitter: {results['fields']['jitter']:.2f} ms")
     print(f"Bytes Sent: {results['fields']['bytes_sent']} bytes")
     print(f"Bytes Received: {results['fields']['bytes_received']} bytes")
-    print(f"Server Name: {results['tags']['server_name']}")
+    # print(f"Server Name: {results['tags']['server_name']}")
     print(f"Server Country: {results['tags']['server_country']}")
     print(f"Server Sponsor: {results['tags']['server_sponsor']}")
     print(f"Test Duration: {results['fields']['test_duration']:.2f} seconds")
@@ -25,10 +25,10 @@ if __name__ == "__main__":
     org = os.getenv("INFLUXDB_ORG")
     bucket = os.getenv("INFLUXDB_BUCKET")
     branch = os.getenv("BRANCH")
-    server_id = os.getenv("SPEEDTEST_SERVER_ID")
+    # server_id = os.getenv("SPEEDTEST_SERVER_ID")
 
     # 运行速度测试
-    results = speeder.run_speedtest(server_id)
+    results = speeder.run_speedtest()
 
     # 打印结果
     print_test_results(results)
