@@ -20,7 +20,7 @@ class InfluxDBWriter:
         self.client = InfluxDBClient(url=self.url, token=self.token, org=self.org)
         self.write_api = self.client.write_api(write_options=SYNCHRONOUS)
 
-    def write_data(self, measurement, fields, tags=None, time=None):
+    def write_data(self, measurement, fields, branch, tags=None, time=None):
         """
         将数据写入 InfluxDB。
 
@@ -31,6 +31,9 @@ class InfluxDBWriter:
         """
         # 创建数据点
         point = Point(measurement)
+
+        # 优先添加 branch 标签
+        point.tag("branch", branch)
 
         # 添加标签（如果提供）
         if tags:

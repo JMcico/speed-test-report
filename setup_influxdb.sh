@@ -55,8 +55,8 @@ timeout 30 influx setup --force \
   --retention 0 \
   --token my-super-secret-token
 
-chown -R kds_admin:kds_admin ~/Speeder/speed-test-report
-chmod 755 ~/Speeder/speed-test-report
+# chown -R kds_admin:kds_admin ~/Speeder/speed-test-report
+# chmod 755 ~/Speeder/speed-test-report
 
 if [ $? -eq 0 ]; then
   echo -e "\n\033[32mInfluxDB 初始化成功!\033[0m"

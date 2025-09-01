@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 
 
-def run_speedtest():
+def run_speedtest(server_id=None):
     # 记录测试开始时间
     test_start_time = datetime.utcnow().isoformat() + "Z"
 
@@ -11,6 +11,13 @@ def run_speedtest():
     st = speedtest.Speedtest()
 
     # 获取最佳服务器
+    if server_id:
+        st.get_servers([server_id])
+        print(f"Using speed test server with ID: {server_id}")
+    else:
+        st.get_servers()
+        print("Using automatic server selection.")
+
     st.get_best_server()
 
     # 测试下载速度（单位：比特/秒）

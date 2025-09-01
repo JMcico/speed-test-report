@@ -24,16 +24,18 @@ if __name__ == "__main__":
     token = os.getenv("INFLUXDB_TOKEN")
     org = os.getenv("INFLUXDB_ORG")
     bucket = os.getenv("INFLUXDB_BUCKET")
+    branch = os.getenv("BRANCH")
+    server_id = os.getenv("SPEEDTEST_SERVER_ID")
 
     # 运行速度测试
-    results = speeder.run_speedtest()
+    results = speeder.run_speedtest(server_id)
 
     # 打印结果
     print_test_results(results)
 
     # 写入数据
     writer = InfluxDBWriter(url, token, org, bucket)
-    writer.write_data(results['measurement'], results['fields'], results['tags'], results['time'])
+    writer.write_data(results['measurement'], results['fields'], branch, results['tags'], results['time'])
     
     # 关闭连接
     writer.close()
