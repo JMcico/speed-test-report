@@ -1,69 +1,85 @@
-# influx-cli
+### **Network Speed Test and Monitoring**
 
-CLI for managing resources in InfluxDB v2
+This project provides a complete solution for automatically testing network speed and storing the results in an InfluxDB database for visualization. The setup is designed for easy deployment and management, ensuring consistent data collection and clear monitoring.
 
-## Motivation
+-----
 
-This repository decouples the `influx` CLI from the OSS `influxdb` codebase. Our goals are to:
-1. Make it easier to keep the CLI up-to-date with InfluxDB Cloud API changes
-2. Enable faster turn-around on fixes/features that only affect the CLI
-3. Allow the CLI to be built & released for a wider range of platforms than the server can support
+### **Prerequisites**
 
-## Building the CLI
+Before you begin, ensure you have the following installed:
 
-Follow these steps to build the CLI. If you're updating your CLI build, see *Updating openapi* below.
-1. Clone this repo (influx-cli) and change to your _influx-cli_ directory.
+  * **Docker**: For running InfluxDB and Grafana containers.
+  * **Git**: For cloning the repository.
+  * **Bash**: For executing the setup scripts.
 
-   ```
-   git clone git@github.com:influxdata/influx-cli.git
-   cd influx-cli
-   ```
-   
-2. Build the CLI. The `make` and `make influx` commands write the new binary to `bin/$(GOOS)/influx`.
-   
-   ```
-   make
-   ```
-   
-### Updating openapi
+-----
 
-If you change or update your branch, you may also need to update `influx-cli/openapi` and regenerate the client code.
-`influx-cli/openapi` is a Git submodule that contains the underlying API contracts and client used by the CLI.
-We use [`OpenAPITools/openapi-generator`](https://github.com/OpenAPITools/openapi-generator) to generate
-the HTTP client.
+### **Project Setup**
 
-To update, run the following commands in your `influx-cli` repo:
+The project setup is broken into three simple steps to prepare your environment, database, and application.
 
-1. Update the _openapi_ Git submodule. The following command pulls the latest commits for the branch and all submodules.
+#### **Step 1: Install Python Environment**
 
-   `git pull --recurse-submodules`
-   
-2. With [Docker](https://docs.docker.com/get-docker/) running locally, regenerate _openapi_.
+The `setup_python.sh` script handles the installation of Python and sets up a dedicated virtual environment to manage project dependencies.
 
-   `make openapi`
-   
-3. Rebuild the CLI
-
-   `make`
- 
-## Running the CLI
-
-After building, use `influx -h` to see the list of available commands.
-
-### Enabling Completions
-
-The CLI supports generating completions for `bash`, `zsh`, and `powershell`. To enable completions for a
-single shell session, run one of these commands:
+```bash
+# Execute the Python setup script
+./setup_python.sh
 ```
-# For bash:
-source <(influx completion bash)
-# For zsh:
-source <(influx completion zsh)
-# For pwsh:
-Invoke-Expression ((influx completion powershell) -join "`n`")
+
+This script will install Python and create a `venv` folder in your project directory.
+
+#### **Step 2: Install and Initialize InfluxDB**
+
+The `setup_influxdb.sh` script uses Docker to install and initialize the InfluxDB database. It will also create the necessary organization, bucket, and API token for your project.
+
+```bash
+# Execute the InfluxDB setup script
+./setup_influxdb.sh
 ```
-To enable completions across sessions, add the appropriate line to your shell's login profile (i.e. `~/.bash_profile`).
 
-## Testing
+#### **Step 3: Configure and Run the Application**
 
-Run `make test` to run unit tests.
+Once the environment is ready, you need to configure the application by editing the `.env` file located in the `speeder_poc` directory.
+
+```bash
+# Navigate to the application directory
+cd speeder_poc/
+```
+
+Open the `.env` file with a text editor and update the parameters with your specific values.
+
+**`.env` file format:**
+
+```ini
+INFLUXDB_URL=http://localhost:8086
+INFLUXDB_TOKEN=my-super-secret-token
+INFLUXDB_ORG=speeder
+INFLUXDB_BUCKET=speeder
+BRANCH=HO
+```
+
+  * **`INFLUXDB_URL`**: The URL of your InfluxDB instance (e.g., `http://localhost:8086`).
+  * **`INFLUXDB_TOKEN`**: The API token generated during the InfluxDB initialization.
+  * **`INFLUXDB_ORG`**: The organization name for your data.
+  * **`INFLUXDB_BUCKET`**: The bucket where your speed test data will be stored.
+  * **`BRANCH`**: The identifier for the location where the script is running (e.g., a specific branch name like "HO" or "London").
+
+After updating the `.env` file, you can run the main script to start sending data to InfluxDB.
+
+```bash
+# Run the speed test script
+python main.py
+```
+
+This will perform a single speed test and write the results to your InfluxDB bucket. For continuous monitoring, it is recommended to automate this script using a scheduling tool like **`cron`**.
+
+-----
+
+### **Visualization with Grafana**
+
+After data is successfully sent to InfluxDB, you can use **Grafana** to create powerful dashboards and visualize your network performance.
+
+  * Connect your Grafana instance to the InfluxDB database as a data source.
+  * Use **Flux queries** to retrieve the network speed data.
+  * Create customizable graphs and dashboards to monitor network performance across all your branches.
